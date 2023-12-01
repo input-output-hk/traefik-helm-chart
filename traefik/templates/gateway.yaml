@@ -3,7 +3,7 @@
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: Gateway
 metadata:
-  name: traefik-gateway
+  name: "{{ .Values.experimental.kubernetesGateway.className }}-gateway"
   namespace: {{ default (include "traefik.namespace" .) .Values.experimental.kubernetesGateway.namespace }}
   labels:
     {{- include "traefik.labels" . | nindent 4 }}
@@ -12,7 +12,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  gatewayClassName: traefik
+  gatewayClassName: {{ .Values.experimental.kubernetesGateway.className }}
   listeners:
     - name: web
       port: {{ .Values.ports.web.port }}
